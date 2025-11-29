@@ -2,20 +2,21 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <script src="https://cdn.tailwindcss.com"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&family=JetBrains+Mono:wght@500&family=Noto+Sans+SC:wght@400;500;700;900&family=Architects+Daughter&display=swap" rel="stylesheet">
     <style>
         body {
-            background-color: #000000;
+            background-color: #f0f2f5;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh; /* 改为 min-height 防止截断 */
             margin: 0;
             font-family: 'Inter', 'Noto Sans SC', sans-serif;
+            overflow-x: hidden; /* 防止水平滚动条 */
         }
 
-        /* --- 信号波纹动画 (位于设备外部) --- */
+        /* --- 信号波纹动画 --- */
         @keyframes ripple-broadcast {
             0% { transform: scale(0.8); opacity: 0.6; border-width: 3px; }
             100% { transform: scale(2.5); opacity: 0; border-width: 0px; }
@@ -28,9 +29,9 @@
         /* --- Astrum 手绘文字 SVG 描边动画 --- */
         .handdrawn-text {
             font-family: 'Architects Daughter', cursive;
-            font-size: 3rem;
+            font-size: 3.5rem;
             font-weight: bold;
-            fill: rgba(255,255,255,0.01); /* 几乎透明的填充 */
+            fill: rgba(255,255,255,0.01);
             stroke: url(#handdrawn-gradient);
             stroke-width: 2px;
             stroke-linecap: round;
@@ -44,22 +45,20 @@
         @keyframes drawText {
             0% { stroke-dashoffset: 600; opacity: 0; }
             10% { opacity: 1; }
-            50% { stroke-dashoffset: 0; } /* 写完 */
-            80% { stroke-dashoffset: 0; opacity: 1; } /* 停留 */
-            100% { stroke-dashoffset: 0; opacity: 0; } /* 消失重来 */
+            50% { stroke-dashoffset: 0; }
+            80% { stroke-dashoffset: 0; opacity: 1; }
+            100% { stroke-dashoffset: 0; opacity: 0; }
         }
 
-        /* 渐变流动 */
         #handdrawn-gradient stop {
             animation: shiftColor 3s infinite linear;
         }
         @keyframes shiftColor {
-            0% { stop-color: #60a5fa; }   /* Blue */
-            50% { stop-color: #c084fc; }  /* Purple */
-            100% { stop-color: #2dd4bf; } /* Teal */
+            0% { stop-color: #60a5fa; }
+            50% { stop-color: #c084fc; }
+            100% { stop-color: #2dd4bf; }
         }
 
-        /* --- 终端光标 --- */
         .typing-cursor {
             display: inline-block;
             width: 6px;
@@ -69,30 +68,21 @@
         }
         @keyframes blink { 50% { opacity: 0; } }
 
-        /* --- 背景装饰 --- */
         .dot-grid {
             background-image: radial-gradient(#94a3b8 1px, transparent 1px);
             background-size: 20px 20px;
         }
-
-        /* --- 玻璃拟态卡片效果 --- */
-        .glass-panel {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(10px);
-        }
     </style>
 </head>
-<body>
-
-<div class="relative w-[900px] h-[480px] bg-white rounded-[40px] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] overflow-hidden flex flex-row border border-slate-200">
+<body class="p-4 sm:p-8"> <div class="relative w-full max-w-[900px] h-auto md:h-[480px] bg-white rounded-[30px] md:rounded-[40px] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] overflow-hidden flex flex-col md:flex-row border border-slate-200">
 
     <div class="absolute inset-0 dot-grid opacity-[0.15] pointer-events-none"></div>
-    <div class="absolute -bottom-40 -left-20 w-[600px] h-[600px] bg-blue-100/40 rounded-full blur-[100px] pointer-events-none"></div>
-    <div class="absolute top-[-100px] right-[-100px] w-[400px] h-[400px] bg-indigo-100/40 rounded-full blur-[80px] pointer-events-none"></div>
+    <div class="absolute -bottom-40 -left-20 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-blue-100/40 rounded-full blur-[60px] md:blur-[100px] pointer-events-none"></div>
+    <div class="absolute top-[-50px] right-[-50px] w-[200px] md:w-[400px] h-[200px] md:h-[400px] bg-indigo-100/40 rounded-full blur-[50px] md:blur-[80px] pointer-events-none"></div>
 
-    <div class="relative z-10 w-[58%] p-12 flex flex-col justify-center pl-16">
+    <div class="relative z-10 w-full md:w-[58%] p-8 md:p-12 flex flex-col justify-center md:pl-16">
 
-        <div class="flex items-center gap-3 mb-8">
+        <div class="flex items-center gap-3 mb-6 md:mb-8">
             <div class="flex items-center gap-1.5 px-3 py-1 bg-slate-900 rounded-full">
                 <div class="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse"></div>
                 <span class="text-white text-[10px] font-bold tracking-widest uppercase">LoRa ND1</span>
@@ -100,67 +90,67 @@
             <span class="text-xs font-semibold text-slate-400 tracking-wide">BUILD 2025.11</span>
         </div>
 
-        <h1 class="text-5xl font-black text-slate-900 tracking-tight mb-2 leading-none">
-            无线小纸条<span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-indigo-600 font-light text-5xl align-baseline ml-1">Air</span>
+        <h1 class="text-3xl md:text-5xl font-black text-slate-900 tracking-tight mb-2 leading-none">
+            无线小纸条<span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-indigo-600 font-light text-3xl md:text-5xl align-baseline ml-1">Air</span>
         </h1>
 
-        <p class="text-lg text-slate-500 font-medium mb-10 tracking-wide">
+        <p class="text-sm md:text-lg text-slate-500 font-medium mb-8 md:mb-10 tracking-wide">
             基于矢量指令流的远距离同步画板
         </p>
 
-        <div class="grid grid-cols-2 gap-6">
+        <div class="grid grid-cols-2 gap-4 md:gap-6">
 
-            <div class="p-4 rounded-2xl bg-slate-50 border border-slate-100 hover:border-blue-200 hover:shadow-sm transition-all group cursor-default">
+            <div class="p-3 md:p-4 rounded-2xl bg-slate-50 border border-slate-100 hover:border-blue-200 hover:shadow-sm transition-all group cursor-default">
                 <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Coverage</div>
                 <div class="flex items-baseline gap-1">
-                    <span class="text-3xl font-bold text-slate-800 group-hover:text-blue-600 transition-colors">500</span>
-                    <span class="text-sm font-bold text-slate-500">m+</span>
+                    <span class="text-2xl md:text-3xl font-bold text-slate-800 group-hover:text-blue-600 transition-colors">500</span>
+                    <span class="text-xs md:text-sm font-bold text-slate-500">m+</span>
                 </div>
-                <div class="mt-2 text-xs text-slate-500 font-medium">校园建筑群穿透</div>
+                <div class="mt-1 md:mt-2 text-[10px] md:text-xs text-slate-500 font-medium">校园建筑群穿透</div>
             </div>
 
-            <div class="p-4 rounded-2xl bg-slate-50 border border-slate-100 hover:border-blue-200 hover:shadow-sm transition-all group cursor-default">
+            <div class="p-3 md:p-4 rounded-2xl bg-slate-50 border border-slate-100 hover:border-blue-200 hover:shadow-sm transition-all group cursor-default">
                 <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Bitrate</div>
                 <div class="flex items-baseline gap-1">
-                    <span class="text-3xl font-bold text-slate-800 group-hover:text-blue-600 transition-colors">19.2</span>
-                    <span class="text-sm font-bold text-slate-500">kbps</span>
+                    <span class="text-2xl md:text-3xl font-bold text-slate-800 group-hover:text-blue-600 transition-colors">19.2</span>
+                    <span class="text-xs md:text-sm font-bold text-slate-500">kbps</span>
                 </div>
-                <div class="mt-2 text-xs text-slate-500 font-medium">优化的稳定速率</div>
+                <div class="mt-1 md:mt-2 text-[10px] md:text-xs text-slate-500 font-medium">优化的稳定速率</div>
             </div>
 
-            <div class="p-4 rounded-2xl bg-slate-50 border border-slate-100 hover:border-blue-200 hover:shadow-sm transition-all group cursor-default">
+            <div class="p-3 md:p-4 rounded-2xl bg-slate-50 border border-slate-100 hover:border-blue-200 hover:shadow-sm transition-all group cursor-default">
                 <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Technology</div>
                 <div class="flex items-center gap-2 mt-1">
-                    <span class="text-xl font-bold text-slate-800 group-hover:text-blue-600 transition-colors">Vector Sync</span>
+                     <span class="text-base md:text-xl font-bold text-slate-800 group-hover:text-blue-600 transition-colors">Vector Sync</span>
                 </div>
-                <div class="mt-2 text-xs text-slate-500 font-medium">矢量坐标 · 零卡顿</div>
+                <div class="mt-1 md:mt-2 text-[10px] md:text-xs text-slate-500 font-medium">矢量坐标 · 零卡顿</div>
             </div>
 
-            <div class="p-4 rounded-2xl bg-slate-50 border border-slate-100 hover:border-blue-200 hover:shadow-sm transition-all group cursor-default">
+            <div class="p-3 md:p-4 rounded-2xl bg-slate-50 border border-slate-100 hover:border-blue-200 hover:shadow-sm transition-all group cursor-default">
                 <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Palette</div>
                 <div class="flex items-center gap-2 mt-1">
-                    <span class="text-xl font-bold text-slate-800 group-hover:text-blue-600 transition-colors">8-bit</span>
+                    <span class="text-base md:text-xl font-bold text-slate-800 group-hover:text-blue-600 transition-colors">8-bit</span>
                     <div class="flex gap-0.5">
-                        <div class="w-2 h-2 rounded-full bg-red-500"></div>
-                        <div class="w-2 h-2 rounded-full bg-yellow-400"></div>
-                        <div class="w-2 h-2 rounded-full bg-blue-500"></div>
+                        <div class="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-red-500"></div>
+                        <div class="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-yellow-400"></div>
+                        <div class="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-blue-500"></div>
                     </div>
                 </div>
-                <div class="mt-2 text-xs text-slate-500 font-medium">256色索引传输</div>
+                <div class="mt-1 md:mt-2 text-[10px] md:text-xs text-slate-500 font-medium">256色索引传输</div>
             </div>
 
         </div>
     </div>
 
-    <div class="relative w-[42%] bg-gradient-to-br from-slate-100 via-white to-slate-50 flex items-center justify-center overflow-hidden border-l border-slate-100">
+    <div class="relative w-full md:w-[42%] h-[400px] md:h-auto bg-gradient-to-br from-slate-100 via-white to-slate-50 flex items-center justify-center overflow-hidden border-t md:border-t-0 md:border-l border-slate-100">
 
         <div class="absolute top-[45%] right-[45%] z-0 pointer-events-none">
             <div class="absolute -top-32 -left-32 w-64 h-64 border border-blue-500/20 rounded-full animate-broadcast"></div>
             <div class="absolute -top-32 -left-32 w-64 h-64 border border-blue-500/20 rounded-full animate-broadcast delay-1000"></div>
         </div>
 
-        <div class="relative z-20 transform rotate-[-5deg] transition-transform duration-700 hover:rotate-0 hover:scale-105 perspective-1000">
-
+        <div class="relative z-20 transform rotate-[-5deg] scale-90 md:scale-100 transition-transform duration-700 hover:rotate-0 hover:scale-100 md:hover:scale-105 perspective-1000">
+            
             <div class="w-[220px] h-[340px] bg-[#1a1a1a] rounded-[20px] p-4 relative shadow-[25px_30px_60px_-10px_rgba(0,0,0,0.4)] border border-slate-700/80 ring-1 ring-white/10">
 
                 <div class="absolute top-5 left-1/2 -translate-x-1/2 flex gap-1.5 opacity-80">
@@ -170,9 +160,9 @@
                 </div>
 
                 <div class="mt-8 w-full h-[230px] bg-black rounded-lg border border-slate-600/50 overflow-hidden relative shadow-inner group">
-
+                    
                     <div class="absolute inset-0 flex flex-col items-center justify-center z-20">
-
+                        
                         <div class="mb-4 transform -rotate-2">
                             <svg width="180" height="90" viewBox="0 0 180 90">
                                 <defs>
@@ -217,7 +207,7 @@
         </div>
 
         <div class="absolute bottom-10 opacity-10 transform scale-y-[-1] rotate-[-5deg] blur-md z-10 pointer-events-none">
-            <div class="w-[220px] h-[340px] bg-slate-900 rounded-[20px]"></div>
+             <div class="w-[220px] h-[340px] bg-slate-900 rounded-[20px]"></div>
         </div>
 
     </div>
