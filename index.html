@@ -2,7 +2,8 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <script src="https://cdn.tailwindcss.com"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&family=JetBrains+Mono:wght@500&family=Noto+Sans+SC:wght@400;500;700;900&family=Architects+Daughter&display=swap" rel="stylesheet">
     <style>
         body {
@@ -10,10 +11,10 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh; /* 改为 min-height 防止截断 */
+            min-height: 100vh;
             margin: 0;
             font-family: 'Inter', 'Noto Sans SC', sans-serif;
-            overflow-x: hidden; /* 防止水平滚动条 */
+            overflow-x: hidden;
         }
 
         /* --- 信号波纹动画 --- */
@@ -26,20 +27,25 @@
         }
         .delay-1000 { animation-delay: 1.2s; }
 
-        /* --- Astrum 手绘文字 SVG 描边动画 --- */
+        /* --- Astrum 手绘文字 SVG 描边动画 (高亮修改版) --- */
         .handdrawn-text {
             font-family: 'Architects Daughter', cursive;
             font-size: 3rem;
             font-weight: bold;
-            fill: rgba(255,255,255,0.01);
+            /* 修改1：稍微增加一点点填充的亮度，不再是几乎全透明 */
+            fill: rgba(255, 255, 255, 0.08); 
             stroke: url(#handdrawn-gradient);
-            stroke-width: 2px;
+            /* 修改2：增加描边宽度，让发光体更粗 */
+            stroke-width: 3px; 
             stroke-linecap: round;
             stroke-linejoin: round;
             stroke-dasharray: 600;
             stroke-dashoffset: 600;
             animation: drawText 4s ease-in-out forwards infinite;
-            filter: drop-shadow(0 0 8px rgba(96, 165, 250, 0.6));
+            /* 修改3：使用更强的双层霓虹灯滤镜效果 */
+            /* 第一层是紧贴的白色高光核心，第二层是扩散的蓝色光晕 */
+            filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.8)) 
+                    drop-shadow(0 0 15px rgba(60, 130, 250, 1.0));
         }
 
         @keyframes drawText {
@@ -53,10 +59,11 @@
         #handdrawn-gradient stop {
             animation: shiftColor 3s infinite linear;
         }
+        /* 修改4：稍微调整渐变颜色，让它们更鲜艳一点 */
         @keyframes shiftColor {
-            0% { stop-color: #60a5fa; }
-            50% { stop-color: #c084fc; }
-            100% { stop-color: #2dd4bf; }
+            0% { stop-color: #3b82f6; }   /* 更亮的蓝 */
+            50% { stop-color: #d946ef; }  /* 更亮的紫粉 */
+            100% { stop-color: #14b8a6; } /* 更亮的青 */
         }
 
         .typing-cursor {
@@ -72,15 +79,11 @@
             background-image: radial-gradient(#94a3b8 1px, transparent 1px);
             background-size: 20px 20px;
         }
-        
-        /* --- 玻璃拟态卡片效果 --- */
-        .glass-panel {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(10px);
-        }
     </style>
 </head>
-<body class="p-4 sm:p-8"> <div class="relative w-full max-w-[900px] h-auto md:h-[480px] bg-white rounded-[30px] md:rounded-[40px] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] overflow-hidden flex flex-col md:flex-row border border-slate-200">
+<body class="p-4 sm:p-8">
+
+<div class="relative w-full max-w-[900px] h-auto md:h-[480px] bg-white rounded-[30px] md:rounded-[40px] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] overflow-hidden flex flex-col md:flex-row border border-slate-200">
 
     <div class="absolute inset-0 dot-grid opacity-[0.15] pointer-events-none"></div>
     <div class="absolute -bottom-40 -left-20 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-blue-100/40 rounded-full blur-[60px] md:blur-[100px] pointer-events-none"></div>
@@ -165,7 +168,7 @@
                     <div class="w-12 h-1.5 rounded-full bg-[#2a2a2a] border border-white/5"></div>
                 </div>
 
-                <div class="mt-8 w-full h-[230px] bg-black rounded-lg border border-slate-600/50 overflow-hidden relative shadow-inner group">
+                <div class="mt-8 w-full h-[230px] bg-black rounded-lg border border-slate-600/50 overflow-hidden relative shadow-[inset_0_0_20px_rgba(0,0,0,1)] group">
                     
                     <div class="absolute inset-0 flex flex-col items-center justify-center z-20">
                         
@@ -173,9 +176,9 @@
                             <svg width="180" height="90" viewBox="0 0 180 90">
                                 <defs>
                                     <linearGradient id="handdrawn-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                                        <stop offset="0%" style="stop-color:#60a5fa" />
-                                        <stop offset="50%" style="stop-color:#f472b6" />
-                                        <stop offset="100%" style="stop-color:#2dd4bf" />
+                                        <stop offset="0%" style="stop-color:currentColor" />
+                                        <stop offset="50%" style="stop-color:currentColor" />
+                                        <stop offset="100%" style="stop-color:currentColor" />
                                     </linearGradient>
                                 </defs>
                                 <text x="50%" y="60%" dominant-baseline="middle" text-anchor="middle" class="handdrawn-text">
@@ -198,7 +201,7 @@
                     </div>
 
                     <div class="absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] z-30 bg-[length:100%_2px,3px_100%] pointer-events-none opacity-20"></div>
-                    <div class="absolute inset-0 bg-gradient-to-tr from-white/10 via-transparent to-transparent pointer-events-none z-40"></div>
+                    <div class="absolute inset-0 bg-gradient-to-tr from-white/20 via-transparent to-transparent pointer-events-none z-40"></div>
                 </div>
 
                 <div class="absolute bottom-4 left-0 w-full px-5 flex justify-between items-end">
@@ -206,7 +209,7 @@
                         <span class="text-[6px] text-slate-500 font-mono font-bold tracking-wider">TPUNB MODULE</span>
                         <span class="text-[6px] text-slate-600 font-mono">3.3V / 19.2K</span>
                     </div>
-                    <div class="w-1.5 h-1.5 bg-blue-500 rounded-full animate-pulse shadow-[0_0_8px_rgba(59,130,246,0.8)]"></div>
+                    <div class="w-1.5 h-1.5 bg-blue-500 rounded-full animate-pulse shadow-[0_0_8px_rgba(59,130,246,1.0)]"></div>
                 </div>
 
             </div>
