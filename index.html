@@ -6,7 +6,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&family=JetBrains+Mono:wght@500&family=Noto+Sans+SC:wght@400;500;700;900&family=Architects+Daughter&display=swap" rel="stylesheet">
     <style>
         body {
-            background-color: #f0f2f5;
+            background-color: #000000;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -29,7 +29,7 @@
         /* --- Astrum 手绘文字 SVG 描边动画 --- */
         .handdrawn-text {
             font-family: 'Architects Daughter', cursive;
-            font-size: 3.5rem;
+            font-size: 3rem;
             font-weight: bold;
             fill: rgba(255,255,255,0.01);
             stroke: url(#handdrawn-gradient);
@@ -71,6 +71,12 @@
         .dot-grid {
             background-image: radial-gradient(#94a3b8 1px, transparent 1px);
             background-size: 20px 20px;
+        }
+        
+        /* --- 玻璃拟态卡片效果 --- */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
         }
     </style>
 </head>
